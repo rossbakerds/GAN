@@ -13,7 +13,7 @@ generator = tf.keras.models.Sequential([
 
 discriminator = tf.keras.models.Sequential([
     tf.keras.layers.Input(shape=((2,))),
-    tf.keras.layers.Dense(150, activation = 'relu', input_shape=[latent_dim]),
+    tf.keras.layers.Dense(150, activation = 'relu'),
     tf.keras.layers.Dense(100, activation = 'relu'),
     tf.keras.layers.Dense(1, activation = 'sigmoid')
     ])
@@ -24,7 +24,7 @@ discriminator.compile(loss = 'binary_crossentropy', optimizer = 'Adam')
 discriminator.trainable = False
 gan.compile(loss = 'binary_crossentropy', optimizer = 'Adam')
 
-batch_size = 32
+batch_size = 5
 
 datasetX1 = np.random.uniform(low = -0.5, high =0.5, size = 2000)
 datasetX2 = [x**2 for x in datasetX1]
@@ -61,7 +61,7 @@ def train_gan(gan, dataset, batch_size, codings_size, n_epochs = 1000):
 
 train_gan(gan,dataset,batch_size, latent_dim)
 
-noise = tf.random.normal(shape=[1, latent_dim])
+noise = tf.random.normal(shape=[60, latent_dim])
 test = generator(noise)
 plt.scatter(test[:,0], test[:,1])
 plt.show()
